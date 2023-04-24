@@ -17,4 +17,7 @@
     <string name="sort_exp_date">Expiration Date</string>
     <string name="sort_quantity">Quantity</string>
     <string name="sort_location">Location</string>
+    <string name="recipe_rec">Recommended Recipes</string>
+    <string name="recipe_ingredients">Ingredients:</string>
+    <string name="recipe_instructions">Instructions:</string>
 </resources>
