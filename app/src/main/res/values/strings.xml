@@ -1,4 +1,5 @@
 <resources>
+    <string name="sort_btn">Sort By</string>
     <string name="app_name">MyPantry</string>
     <string name="title_home">Home</string>
     <string name="title_grocery">Grocery List</string>
