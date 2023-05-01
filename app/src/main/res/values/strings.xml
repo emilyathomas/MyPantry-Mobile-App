@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">MyPantry</string>
+    <string name="title_home">Home</string>
+    <string name="title_grocery">Grocery List</string>
+    <string name="item">Item:</string>
+    <string name="quantity">Quantity:</string>
+    <string name="sku">SKU:</string>
+    <string name="exp_date">Expiration Date:</string>
+    <string name="location">Location</string>
+    <string name="pantry_location">Pantry</string>
+    <string name="fridge_location">Fridge</string>
+    <string name="freezer_location">Freezer</string>
+    <string name="notes">Notes:</string>
+    <string name="done">Done</string>
+    <string name="sort_name">Name</string>
+    <string name="sort_sku">SKU</string>
+    <string name="sort_exp_date">Expiration Date</string>
+    <string name="sort_quantity">Quantity</string>
+    <string name="sort_location">Location</string>
+    <string name="recipe_rec">Recommended Recipes</string>
+    <string name="recipe_ingredients">Ingredients:</string>
+    <string name="recipe_instructions">Instructions:</string>
+</resources>
