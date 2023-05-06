@@ -8,19 +8,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+public class MainActivity extends AppCompatActivity {
+    private FloatingActionButton mFAB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainactivity);
 
-        Intent intent = new Intent(MainActivity.this, GroceryActivity.class);
+        Intent groceryIntent = new Intent(MainActivity.this, GroceryActivity.class);
+        Intent addPantryIntent = new Intent(MainActivity.this, addPantry.class);
 
         ImageButton groceryBtn = findViewById(R.id.groceryBtn);
         groceryBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                startActivity(intent);
+                startActivity(groceryIntent);
+            }
+        });
+
+        mFAB = findViewById(R.id.addItem);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startActivity(addPantryIntent);
             }
         });
     }

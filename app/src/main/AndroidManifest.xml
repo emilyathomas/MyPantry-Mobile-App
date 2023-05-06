@@ -25,6 +25,18 @@
             android:name=".GroceryActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".mealRecommendation"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".addGrocery"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".addPantry"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
