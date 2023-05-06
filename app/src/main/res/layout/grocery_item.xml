@@ -7,4 +7,40 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
+    <TextView
+        android:id="@+id/groceryItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        android:text="Grocery Item Name" />
+
+    <TextView
+        android:id="@+id/itemSKU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:layout_weight="1"
+        android:text="Item SKU" />
+
+    <TextView
+        android:id="@+id/itemQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:layout_weight="1"
+        android:text="Item Quantity" />
+
+    <Button
+        android:id="@+id/itemRemoval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:background="@android:color/transparent"
+        android:textColor="#FF0000"/>
+
 </LinearLayout>
