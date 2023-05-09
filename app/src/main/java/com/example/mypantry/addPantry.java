@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class addPantry extends AppCompatActivity {
     private FloatingActionButton mFAB;
+    private int value = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +23,34 @@ public class addPantry extends AppCompatActivity {
 
         Intent pantryIntent = new Intent(addPantry.this, MainActivity.class);
 
+        //close button
         Button closeAdd = findViewById(R.id.close_addPantry);
         closeAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                startActivity(pantryIntent);
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+
+
+        TextView quantity = findViewById(R.id.itemQuantity);
+        quantity.setText(Integer.toString(value));
+
+        //increase quantity
+        Button incQuantity = findViewById(R.id.incQuantity);
+        incQuantity.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                value += 1;
+                quantity.setText(Integer.toString(value));
+            }
+        });
+
+        //decrease quantity
+        Button decQuantity = findViewById(R.id.decQuantity);
+        decQuantity.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                value -= 1;
+                quantity.setText(Integer.toString(value));
             }
         });
 
@@ -34,30 +59,44 @@ public class addPantry extends AppCompatActivity {
             public void onClick(View view) {
                 EditText itemName = (EditText) findViewById(R.id.itemName);
                 String newName = itemName.getText().toString();
-                pantryIntent.putExtra("Name", newName);
+                pantryIntent.putExtra("pantryName", newName);
 
                 TextView itemQuantity = (TextView) findViewById(R.id.itemQuantity);
                 String newQuantity = itemQuantity.getText().toString();
-                pantryIntent.putExtra("Quantity", newQuantity);
+                pantryIntent.putExtra("pantryQuantity", newQuantity);
+
+                TextView itemSKU = (TextView) findViewById(R.id.itemSKU);
+                String newSKU = itemSKU.getText().toString();
+                pantryIntent.putExtra("pantrySKU", newSKU);
 
                 EditText itemExpDate = (EditText) findViewById(R.id.itemExpDate);
                 String newExpDate = itemExpDate.getText().toString();
-                pantryIntent.putExtra("Exp Date", newExpDate);
+                pantryIntent.putExtra("pantryExpDate", newExpDate);
 
                 RadioGroup pantryLoc = (RadioGroup) findViewById(R.id.itemLoc);
                 int newLoc = pantryLoc.getCheckedRadioButtonId();
-                if (newLoc == 1) {
-
+                System.out.println(pantryLoc.getCheckedRadioButtonId());
+                String pantry = "Pantry";
+                //pantry = 2131231063
+                String fridge = "Fridge";
+                //fridge = 2131230923
+                String freezer = "Freezer";
+                //freezer = 2131230922
+                if (newLoc == 2131231063) {
+                    pantryIntent.putExtra("pantryLocation", pantry);
+                } else if (newLoc == 2131230923 ) {
+                    pantryIntent.putExtra("pantryLocation", fridge);
                 } else {
-
+                    pantryIntent.putExtra("pantryLocation", freezer);
                 }
 
                 EditText itemNotes = (EditText) findViewById(R.id.itemNotes);
                 String newNote = itemNotes.getText().toString();
-                pantryIntent.putExtra("Note", newNote);
+                pantryIntent.putExtra("pantryNote", newNote);
 
 
-                startActivity(pantryIntent);
+                setResult(RESULT_OK, pantryIntent);
+                finish();
             }
         });
     }
