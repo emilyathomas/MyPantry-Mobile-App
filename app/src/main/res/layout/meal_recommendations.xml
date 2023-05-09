@@ -32,6 +32,7 @@
     </LinearLayout>
 
     <Space
+        android:id="@+id/recipeIngredients_text"
         android:layout_width="match_parent"
         android:layout_height="20dp" />
 
@@ -41,6 +42,7 @@
         android:layout_height="wrap_content" />
 
     <Space
+        android:id="@+id/recipeInstructions_text"
         android:layout_width="match_parent"
         android:layout_height="20dp" />
 
@@ -70,5 +72,8 @@
         android:id="@+id/recipeInstructions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <!-- TODO: add a button to pull strings, cycle through recipes -->
+
 
 </LinearLayout>
