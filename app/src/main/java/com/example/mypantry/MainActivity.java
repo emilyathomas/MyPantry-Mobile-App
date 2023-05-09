@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<PantryItem> items = new ArrayList<>();
 
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -44,6 +45,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+ */
+
+    ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        String pantryName = data.getStringExtra("pantryName");
+                        String pantryQuantity = data.getStringExtra("pantryQuantity");
+                        String pantrySKU = data.getStringExtra("pantrySKU");
+                        String pantryExpDate = data.getStringExtra("pantryExpDate");
+                        String pantryLocation = data.getStringExtra("pantryLocation");
+                        String pantryNote = data.getStringExtra("pantryNote");
+                        if (pantryName != null && pantryQuantity != null && pantrySKU != null && pantryExpDate != null && pantryLocation != null) {
+                            items.add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         if (pantryName != null && pantryQuantity != null && pantrySKU != null) {
             items.add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
         }
+
+        items.add(new PantryItem("Test Item", "1", "123456", "12/31/2023", "Pantry", "Test note"));
+
 
         mAdapter = new PantryAdapterListBasic(this, items);
 
@@ -81,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         mFAB = findViewById(R.id.addItem);
         mFAB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                startActivityForResult(addPantryIntent, 1);
+                resultLauncher.launch(addPantryIntent);
             }
         });
     }

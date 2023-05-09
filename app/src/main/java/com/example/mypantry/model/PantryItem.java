@@ -37,4 +37,6 @@ public class PantryItem {
         return pantryLocation;
     }
 
+    public String getPantryNotes() { return pantryNotes; }
+
 }

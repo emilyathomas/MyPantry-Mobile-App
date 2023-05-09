@@ -75,13 +75,9 @@ public class addPantry extends AppCompatActivity {
 
                 RadioGroup pantryLoc = (RadioGroup) findViewById(R.id.itemLoc);
                 int newLoc = pantryLoc.getCheckedRadioButtonId();
-                System.out.println(pantryLoc.getCheckedRadioButtonId());
                 String pantry = "Pantry";
-                //pantry = 2131231063
                 String fridge = "Fridge";
-                //fridge = 2131230923
                 String freezer = "Freezer";
-                //freezer = 2131230922
                 if (newLoc == 2131231063) {
                     pantryIntent.putExtra("pantryLocation", pantry);
                 } else if (newLoc == 2131230923 ) {

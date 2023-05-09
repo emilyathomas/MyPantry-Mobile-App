@@ -16,39 +16,40 @@ import java.util.List;
 
 public class PantryAdapterListBasic extends RecyclerView.Adapter<PantryAdapterListBasic.ViewHolder> {
 
-    private Context context;
-    private List<PantryItem> items;
+    private Context mContext;
+    private List<PantryItem> mItems;
 
     public PantryAdapterListBasic(Context context, List<PantryItem> items) {
-        this.context = context;
-        this.items = items;
+        mContext = context;
+        mItems = items;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pantry_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.pantry_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PantryItem currentItem = items.get(position);
+        PantryItem currentItem = mItems.get(position);
 
         holder.itemName.setText(currentItem.getPantryName());
         holder.itemQuantity.setText(currentItem.getPantryQuantity());
         holder.itemExpDate.setText(currentItem.getPantryExpDate());
         holder.itemLocation.setText(currentItem.getPantryLocation());
+        holder.itemNote.setText(currentItem.getPantryNotes());
 
         holder.itemRemoval.setOnClickListener(view -> {
-            items.remove(position);
+            mItems.remove(position);
             notifyDataSetChanged();
         });
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return mItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
