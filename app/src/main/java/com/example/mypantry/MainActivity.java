@@ -14,9 +14,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.mypantry.model.PantryItem;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,27 +31,6 @@ public class MainActivity extends AppCompatActivity {
     public RecyclerView recyclerView;
 
     private List<PantryItem> items = new ArrayList<>();
-
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            String pantryName = data.getStringExtra("pantryName");
-            String pantryQuantity = data.getStringExtra("pantryQuantity");
-            String pantrySKU = data.getStringExtra("pantrySKU");
-            String pantryExpDate = data.getStringExtra("pantryExpDate");
-            String pantryLocation = data.getStringExtra("pantryLocation");
-            String pantryNote = data.getStringExtra("pantryNote");
-            if (pantryName != null && pantryQuantity != null && pantrySKU != null && pantryExpDate != null && pantryLocation != null) {
-                items.add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
-                mAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
- */
 
     ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -67,6 +52,104 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+    private void showSortDialog() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this);
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.sort_by, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+
+        Button nameSortBtn = bottomSheetView.findViewById(R.id.nameSort);
+        Button skuSortBtn = bottomSheetView.findViewById(R.id.skuSort);
+        Button expDateSortBtn = bottomSheetView.findViewById(R.id.expDateSort);
+        Button quantitySortBtn = bottomSheetView.findViewById(R.id.quantitySort);
+        Button locationSortBtn = bottomSheetView.findViewById(R.id.locationSort);
+
+        nameSortBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sort items by name and update the RecyclerView
+                Collections.sort(items, new Comparator<PantryItem>() {
+                    @Override
+                    public int compare(PantryItem i1, PantryItem i2) {
+                        return i1.getPantryName().compareTo(i2.getPantryName());
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        skuSortBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sort items by name and update the RecyclerView
+                Collections.sort(items, new Comparator<PantryItem>() {
+                    @Override
+                    public int compare(PantryItem i1, PantryItem i2) {
+                        return i1.getPantrySKU().compareTo(i2.getPantrySKU());
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        expDateSortBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final SimpleDateFormat format = new SimpleDateFormat("mm/dd/yyyy");
+                Collections.sort(items, new Comparator<PantryItem>() {
+                    @Override
+                    public int compare(PantryItem i1, PantryItem i2) {
+                        try {
+                            Date date1 = format.parse(i1.getPantryExpDate());
+                            Date date2 = format.parse(i2.getPantryExpDate());
+                            if (date1 != null && date2 != null) {
+                                return date1.compareTo(date2);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        return 0;
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        quantitySortBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sort items by name and update the RecyclerView
+                Collections.sort(items, new Comparator<PantryItem>() {
+                    @Override
+                    public int compare(PantryItem i1, PantryItem i2) {
+                        return i1.getPantryQuantity().compareTo(i2.getPantryQuantity());
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        locationSortBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sort items by name and update the RecyclerView
+                Collections.sort(items, new Comparator<PantryItem>() {
+                    @Override
+                    public int compare(PantryItem i1, PantryItem i2) {
+                        return i2.getPantryLocation().compareTo(i1.getPantryLocation());
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +168,6 @@ public class MainActivity extends AppCompatActivity {
             items.add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
         }
 
-        items.add(new PantryItem("Test Item", "1", "123456", "12/31/2023", "Pantry", "Test note"));
-
-
         mAdapter = new PantryAdapterListBasic(this, items);
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -96,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
 
         Intent groceryIntent = new Intent(MainActivity.this, GroceryActivity.class);
         Intent addPantryIntent = new Intent(MainActivity.this, addPantry.class);
+
+        Button sortBtn = findViewById(R.id.sortBy);
+        sortBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {showSortDialog();};
+        });
 
         ImageButton groceryBtn = findViewById(R.id.groceryBtn);
         groceryBtn.setOnClickListener(new View.OnClickListener() {

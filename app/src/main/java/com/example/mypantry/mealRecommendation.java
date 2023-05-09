@@ -17,8 +17,8 @@ public class mealRecommendation extends AppCompatActivity {
 
         Intent intent = new Intent(mealRecommendation.this, MainActivity.class);
 
-        Button groceryBtn = findViewById(R.id.close_recipe);
-        groceryBtn.setOnClickListener(new View.OnClickListener() {
+        Button closeBtn = findViewById(R.id.close_recipe);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 startActivity(intent);
             }

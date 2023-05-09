@@ -80,7 +80,7 @@ public class addPantry extends AppCompatActivity {
                 String freezer = "Freezer";
                 if (newLoc == 2131231063) {
                     pantryIntent.putExtra("pantryLocation", pantry);
-                } else if (newLoc == 2131230923 ) {
+                } else if (newLoc == 2131230922 ) {
                     pantryIntent.putExtra("pantryLocation", fridge);
                 } else {
                     pantryIntent.putExtra("pantryLocation", freezer);
