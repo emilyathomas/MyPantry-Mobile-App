@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -24,76 +24,83 @@
                 android:id="@+id/pantryItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="left"
                 android:text="Name"
-                android:textSize="24sp"
+                android:textColor="@color/purple_700"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/itemLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Location" />
+                android:gravity="left"
+                android:text="Location"
+                android:textColor="@color/purple_500"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/itemQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Quantity" />
+                android:gravity="left"
+                android:text="Quantity"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/itemExpDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="Expiration Date"
+                android:textSize="15sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:gravity="right"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/groceryAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
                     app:cornerRadius="0dp"
-                    app:icon="@drawable/ic_groceryadd"
-                    app:iconGravity="end"
+                    app:icon="@drawable/grocery"
                     app:iconSize="40dp" />
 
                 <Button
                     android:id="@+id/itemRemoval"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    app:cornerRadius="0dp"
-                    app:icon="@drawable/x_sign"
-                    app:iconSize="40dp" />
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/transparent"
+                    android:text="Remove"
+                    android:textColor="#FF0000" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/itemExpDate"
+                    android:id="@+id/itemNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Expiration Date" />
-
-                <TextView
-                    android:id="@+id/itemSKU"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="SKU" />
+                    android:text="TextView" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
