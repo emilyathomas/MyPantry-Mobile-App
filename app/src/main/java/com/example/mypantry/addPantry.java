@@ -8,12 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import com.example.mypantry.DataHolder;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class addPantry extends AppCompatActivity {
-    private FloatingActionButton mFAB;
     private int value = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +73,9 @@ public class addPantry extends AppCompatActivity {
                 String pantry = "Pantry";
                 String fridge = "Fridge";
                 String freezer = "Freezer";
-                if (newLoc == 2131231063) {
+                if (newLoc == 2131231064) {
                     pantryIntent.putExtra("pantryLocation", pantry);
-                } else if (newLoc == 2131230922 ) {
+                } else if (newLoc == 2131230922) {
                     pantryIntent.putExtra("pantryLocation", fridge);
                 } else {
                     pantryIntent.putExtra("pantryLocation", freezer);
@@ -88,7 +84,6 @@ public class addPantry extends AppCompatActivity {
                 EditText itemNotes = (EditText) findViewById(R.id.itemNotes);
                 String newNote = itemNotes.getText().toString();
                 pantryIntent.putExtra("pantryNote", newNote);
-
 
                 setResult(RESULT_OK, pantryIntent);
                 finish();

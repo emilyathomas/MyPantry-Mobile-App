@@ -1,7 +1,6 @@
 package com.example.mypantry;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.example.mypantry.model.PantryItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,11 +19,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton mFAB;
@@ -67,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         nameSortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
                 Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
@@ -82,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         skuSortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
                 Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
@@ -121,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         quantitySortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
                 Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
@@ -136,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         locationSortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
                 Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
