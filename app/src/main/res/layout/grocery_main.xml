@@ -30,21 +30,15 @@
         android:gravity="bottom"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNav"
             android:src="@drawable/home"
-            app:cornerRadius="0px" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:menu="@menu/bottom_nav_menu"
+            />
 
-        <ImageButton
-            android:id="@+id/groceryBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/grocery"
-            app:cornerRadius="0px" />
 
     </LinearLayout>
 

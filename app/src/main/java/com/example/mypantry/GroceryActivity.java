@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mypantry.model.GroceryItem;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -22,8 +23,6 @@ public class GroceryActivity extends AppCompatActivity {
     public GroceryAdapterListBasic mAdapter;
     public RecyclerView recyclerView;
 
-    private List<GroceryItem> items = new ArrayList<>();
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -34,7 +33,7 @@ public class GroceryActivity extends AppCompatActivity {
             String groceryQuantity = data.getStringExtra("GroceryQuantity");
             String grocerySKU = data.getStringExtra("GrocerySKU");
             if (groceryName != null && groceryQuantity != null && grocerySKU != null) {
-                items.add(new GroceryItem(groceryName, groceryQuantity, grocerySKU));
+                DataHolder.getInstance().getGroceryList().add(new GroceryItem(groceryName, groceryQuantity, grocerySKU));
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -44,6 +43,9 @@ public class GroceryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grocery_main);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
+        bottomNavigationView.setSelectedItemId(R.id.nav_grocery);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
         Intent intent = getIntent();
@@ -51,30 +53,33 @@ public class GroceryActivity extends AppCompatActivity {
         String groceryQuantity = intent.getStringExtra("GroceryQuantity");
         String grocerySKU = intent.getStringExtra("GrocerySKU");
         if (groceryName != null && groceryQuantity != null && grocerySKU != null) {
-            items.add(new GroceryItem(groceryName, groceryQuantity, grocerySKU));
+            DataHolder.getInstance().getGroceryList().add(new GroceryItem(groceryName, groceryQuantity, grocerySKU));
         }
 
-        mAdapter = new GroceryAdapterListBasic(this, items);
+        mAdapter = new GroceryAdapterListBasic(this, DataHolder.getInstance().getGroceryList());
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        Intent mainIntent = new Intent(GroceryActivity.this, MainActivity.class);
-        Intent addGroceryIntent = new Intent(GroceryActivity.this, addGrocery.class);
 
-        ImageButton homeBtn = findViewById(R.id.homeBtn);
-        homeBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                startActivity(mainIntent);
-            }
-        });
+        Intent addGroceryIntent = new Intent(GroceryActivity.this, addGrocery.class);
+        Intent mainIntent = new Intent(GroceryActivity.this, MainActivity.class);
 
         mFAB = findViewById(R.id.addGroceryItem);
         mFAB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 startActivityForResult(addGroceryIntent, 1);
             }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_home) {
+                startActivity(mainIntent);
+            } else if (item.getItemId() == R.id.nav_grocery) {
+
+            }
+            return true;
         });
 
     }

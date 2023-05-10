@@ -1,6 +1,7 @@
 package com.example.mypantry;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.mypantry.model.PantryItem;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     public PantryAdapterListBasic mAdapter;
     public RecyclerView recyclerView;
 
-    private List<PantryItem> items = new ArrayList<>();
-
     ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         String pantryLocation = data.getStringExtra("pantryLocation");
                         String pantryNote = data.getStringExtra("pantryNote");
                         if (pantryName != null && pantryQuantity != null && pantrySKU != null && pantryExpDate != null && pantryLocation != null) {
-                            items.add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
+                            DataHolder.getInstance().getPantryList().add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
                             mAdapter.notifyDataSetChanged();
                         }
                     }
@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         nameSortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort items by name and update the RecyclerView
-                Collections.sort(items, new Comparator<PantryItem>() {
+                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
+                Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
                         return i1.getPantryName().compareTo(i2.getPantryName());
@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         skuSortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort items by name and update the RecyclerView
-                Collections.sort(items, new Comparator<PantryItem>() {
+                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
+                Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
                         return i1.getPantrySKU().compareTo(i2.getPantrySKU());
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final SimpleDateFormat format = new SimpleDateFormat("mm/dd/yyyy");
-                Collections.sort(items, new Comparator<PantryItem>() {
+                Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
                         try {
@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         quantitySortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort items by name and update the RecyclerView
-                Collections.sort(items, new Comparator<PantryItem>() {
+                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
+                Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
                         return i1.getPantryQuantity().compareTo(i2.getPantryQuantity());
@@ -136,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
         locationSortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sort items by name and update the RecyclerView
-                Collections.sort(items, new Comparator<PantryItem>() {
+                // Sort DataHolder.getInstance().getPantryList() by name and update the RecyclerView
+                Collections.sort(DataHolder.getInstance().getPantryList(), new Comparator<PantryItem>() {
                     @Override
                     public int compare(PantryItem i1, PantryItem i2) {
                         return i2.getPantryLocation().compareTo(i1.getPantryLocation());
@@ -155,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainactivity);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
         Intent intent = getIntent();
@@ -164,36 +167,38 @@ public class MainActivity extends AppCompatActivity {
         String pantryExpDate = intent.getStringExtra("pantryExpDate");
         String pantryLocation = intent.getStringExtra("pantryLocation");
         String pantryNote = intent.getStringExtra("pantryNote");
-        if (pantryName != null && pantryQuantity != null && pantrySKU != null) {
-            items.add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
+        if (pantryName != null && pantryQuantity != null && pantrySKU != null && pantryExpDate != null && pantryLocation != null ) {
+            DataHolder.getInstance().getPantryList().add(new PantryItem(pantryName, pantryQuantity, pantrySKU, pantryExpDate, pantryLocation, pantryNote));
         }
 
-        mAdapter = new PantryAdapterListBasic(this, items);
+        mAdapter = new PantryAdapterListBasic(this, DataHolder.getInstance().getPantryList());
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-
-        Intent groceryIntent = new Intent(MainActivity.this, GroceryActivity.class);
-        Intent addPantryIntent = new Intent(MainActivity.this, addPantry.class);
 
         Button sortBtn = findViewById(R.id.sortBy);
         sortBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {showSortDialog();};
         });
 
-        ImageButton groceryBtn = findViewById(R.id.groceryBtn);
-        groceryBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                startActivity(groceryIntent);
-            }
-        });
+        Intent addPantryIntent = new Intent(MainActivity.this, addPantry.class);
+        Intent groceryIntent = new Intent(MainActivity.this, GroceryActivity.class);
 
         mFAB = findViewById(R.id.addItem);
         mFAB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 resultLauncher.launch(addPantryIntent);
             }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_home) {
+
+            } else if (item.getItemId() == R.id.nav_grocery) {
+                startActivity(groceryIntent);
+            }
+            return true;
         });
     }
 }

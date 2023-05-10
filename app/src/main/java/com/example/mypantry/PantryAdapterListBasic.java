@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mypantry.model.GroceryItem;
 import com.example.mypantry.model.PantryItem;
 
 import java.util.List;
@@ -45,6 +47,11 @@ public class PantryAdapterListBasic extends RecyclerView.Adapter<PantryAdapterLi
             mItems.remove(position);
             notifyDataSetChanged();
         });
+
+        holder.groceryAdd.setOnClickListener(view -> {
+            GroceryItem groceryItem = new GroceryItem(currentItem.getPantryName(), currentItem.getPantryQuantity(), currentItem.getPantrySKU());
+            DataHolder.getInstance().getGroceryList().add(groceryItem);
+        });
     }
 
     @Override
@@ -61,6 +68,8 @@ public class PantryAdapterListBasic extends RecyclerView.Adapter<PantryAdapterLi
         TextView itemNote;
         Button itemRemoval;
 
+        ImageButton groceryAdd;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -70,6 +79,7 @@ public class PantryAdapterListBasic extends RecyclerView.Adapter<PantryAdapterLi
             itemExpDate = itemView.findViewById(R.id.itemExpDate);
             itemNote = itemView.findViewById(R.id.itemNotes);
             itemRemoval = itemView.findViewById(R.id.itemRemoval);
+            groceryAdd = itemView.findViewById(R.id.groceryAdd);
         }
     }
 }
